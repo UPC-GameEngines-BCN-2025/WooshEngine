@@ -1,0 +1,3 @@
+C:/Users/maxmf/Documents/GitHub/WooshEngine/build/dev/CMakeFiles/WooshEngine.dir
+C:/Users/maxmf/Documents/GitHub/WooshEngine/build/dev/CMakeFiles/edit_cache.dir
+C:/Users/maxmf/Documents/GitHub/WooshEngine/build/dev/CMakeFiles/rebuild_cache.dir

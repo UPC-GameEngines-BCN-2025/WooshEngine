@@ -1,0 +1,24 @@
+Package: vcpkg-cmake-config
+Version: 2024-05-23
+Architecture: x64-windows
+Multi-Arch: same
+Abi: cc84f9ab01bf9469af56290ae41b0f36eec9400ecb89d4335263d1f85efdad11
+Status: install ok installed
+
+Package: vcpkg-cmake
+Version: 2024-04-23
+Architecture: x64-windows
+Multi-Arch: same
+Abi: ad7c96b4631dcc99540877e59aa1010db7b14257f95d197e20ec16073ddfcdbf
+Status: install ok installed
+
+Package: glm
+Version: 1.0.1
+Port-Version: 3
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 7e8abb9b1abfc39dd4232bfcefe5adcc58df919d192574f8e504c0d6e0e235c2
+Description: OpenGL Mathematics (GLM)
+Status: install ok installed
+
