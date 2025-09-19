@@ -123,11 +123,11 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "CXX compiler"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
 			"type" : "STRING",
-			"value" : "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.42.34433/bin/Hostx64/x64/cl.exe"
+			"value" : "cl.exe"
 		},
 		{
 			"name" : "CMAKE_CXX_FLAGS",
@@ -235,11 +235,11 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "C compiler"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
 			"type" : "STRING",
-			"value" : "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.42.34433/bin/Hostx64/x64/cl.exe"
+			"value" : "cl.exe"
 		},
 		{
 			"name" : "CMAKE_C_FLAGS",
@@ -1059,10 +1059,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "The CMake toolchain file"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "FILEPATH",
+			"type" : "STRING",
 			"value" : "C:/Users/maxmf/Documents/GitHub/WooshEngine/vcpkg/scripts/buildsystems/vcpkg.cmake"
 		},
 		{
@@ -1080,6 +1080,62 @@
 			],
 			"type" : "BOOL",
 			"value" : "FALSE"
+		},
+		{
+			"name" : "FIND_PACKAGE_MESSAGE_DETAILS_OpenGL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Details about finding OpenGL"
+				}
+			],
+			"type" : "INTERNAL",
+			"value" : "[opengl32][c ][v()]"
+		},
+		{
+			"name" : "OPENGL_gl_LIBRARY",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "OpenGL library for win32"
+				}
+			],
+			"type" : "STRING",
+			"value" : "opengl32"
+		},
+		{
+			"name" : "OPENGL_glu_LIBRARY",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "GLU library for win32"
+				}
+			],
+			"type" : "STRING",
+			"value" : "glu32"
+		},
+		{
+			"name" : "SDL3_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for SDL3."
+				}
+			],
+			"type" : "PATH",
+			"value" : "C:/Users/maxmf/Documents/GitHub/WooshEngine/build/dev/vcpkg_installed/x64-windows/share/sdl3"
 		},
 		{
 			"name" : "VCPKG_APPLOCAL_DEPS",
@@ -1396,6 +1452,18 @@
 			],
 			"type" : "PATH",
 			"value" : "C:/Users/maxmf/Documents/GitHub/WooshEngine/build/dev/vcpkg_installed"
+		},
+		{
+			"name" : "glad_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for glad."
+				}
+			],
+			"type" : "PATH",
+			"value" : "C:/Users/maxmf/Documents/GitHub/WooshEngine/build/dev/vcpkg_installed/x64-windows/share/glad"
 		},
 		{
 			"name" : "glm_DIR",

@@ -10,8 +10,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)       # optional: disable compiler-specific extens
 project (WooshEngine)
 
 find_package(glm CONFIG REQUIRED)
+find_package(glad CONFIG REQUIRED)
+find_package(SDL3 CONFIG REQUIRED)
+find_package(OpenGL REQUIRED)
 
 # Add source to this project's executable.
-add_executable (WooshEngine "WooshEngine.cpp" "WooshEngine.h")
+add_executable (WooshEngine "src/WooshEngine.cpp" "src/WooshEngine.h")
 
 target_link_libraries(WooshEngine PRIVATE glm::glm)
