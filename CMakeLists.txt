@@ -13,6 +13,7 @@ find_package(glm CONFIG REQUIRED)
 find_package(glad CONFIG REQUIRED)
 find_package(SDL3 CONFIG REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(imgui REQUIRED)
 
 # Add source to this project's executable.
 add_executable (WooshEngine "src/WooshEngine.cpp" "src/WooshEngine.h")
@@ -21,6 +22,7 @@ target_link_libraries(WooshEngine PRIVATE glm::glm)
 target_link_libraries(WooshEngine PRIVATE glad::glad)
 target_link_libraries(WooshEngine PRIVATE SDL3::SDL3)
 target_link_libraries(WooshEngine PRIVATE OpenGL::GL)
+target_link_libraries(WooshEngine PRIVATE imgui::imgui)
 
 #Disable RTTI
 target_compile_options(WooshEngine PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/GR->$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-fno-rtti>)
