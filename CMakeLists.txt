@@ -6,7 +6,6 @@ cmake_minimum_required (VERSION 3.8)
 set(CMAKE_CXX_STANDARD 17)          # request C++17
 set(CMAKE_CXX_STANDARD_REQUIRED ON) # require it
 set(CMAKE_CXX_EXTENSIONS OFF)       # optional: disable compiler-specific extensions
-set(CMAKE_ANDROID_RTTI OFF)			# disable RTTI
 
 project (WooshEngine)
 
@@ -22,3 +21,6 @@ target_link_libraries(WooshEngine PRIVATE glm::glm)
 target_link_libraries(WooshEngine PRIVATE glad::glad)
 target_link_libraries(WooshEngine PRIVATE SDL3::SDL3)
 target_link_libraries(WooshEngine PRIVATE OpenGL::GL)
+
+#Disable RTTI
+target_compile_options(WooshEngine PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/GR->$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-fno-rtti>)
