@@ -1,9 +1,122 @@
 ﻿#include "WooshEngine.h"
 
+void SetImGuiTheme() {
+    ImGuiStyle& style = ImGui::GetStyle();
+    ImVec4* colors = style.Colors;
+
+    colors[ImGuiCol_WindowBg] = ImVec4(0.08f, 0.05f, 0.12f, 1.00f);
+    colors[ImGuiCol_ChildBg] = ImVec4(0.10f, 0.06f, 0.14f, 1.00f);
+    colors[ImGuiCol_PopupBg] = ImVec4(0.12f, 0.07f, 0.16f, 0.95f);
+    colors[ImGuiCol_Border] = ImVec4(0.35f, 0.35f, 0.45f, 0.60f);
+    colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+
+    colors[ImGuiCol_FrameBg] = ImVec4(0.18f, 0.10f, 0.26f, 1.00f);
+    colors[ImGuiCol_FrameBgHovered] = ImVec4(0.35f, 0.18f, 0.50f, 1.00f);
+    colors[ImGuiCol_FrameBgActive] = ImVec4(0.45f, 0.22f, 0.60f, 1.00f);
+
+    colors[ImGuiCol_TitleBg] = ImVec4(0.24f, 0.00f, 0.35f, 1.00f);
+    colors[ImGuiCol_TitleBgActive] = ImVec4(0.50f, 0.00f, 0.65f, 1.00f);
+    colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.15f, 0.00f, 0.20f, 0.75f);
+
+    colors[ImGuiCol_MenuBarBg] = ImVec4(0.12f, 0.08f, 0.20f, 1.00f);
+    colors[ImGuiCol_ScrollbarBg] = ImVec4(0.08f, 0.05f, 0.10f, 1.00f);
+    colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.40f, 0.40f, 0.50f, 0.60f);
+    colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.50f, 0.50f, 0.60f, 0.80f);
+    colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.60f, 0.60f, 0.70f, 1.00f);
+
+    colors[ImGuiCol_CheckMark] = ImVec4(0.85f, 0.85f, 0.95f, 1.00f);
+    colors[ImGuiCol_SliderGrab] = ImVec4(0.70f, 0.60f, 0.90f, 1.00f);
+    colors[ImGuiCol_SliderGrabActive] = ImVec4(0.90f, 0.80f, 1.00f, 1.00f);
+
+    colors[ImGuiCol_Button] = ImVec4(0.30f, 0.10f, 0.50f, 1.00f);
+    colors[ImGuiCol_ButtonHovered] = ImVec4(0.50f, 0.20f, 0.75f, 1.00f);
+    colors[ImGuiCol_ButtonActive] = ImVec4(0.65f, 0.30f, 0.90f, 1.00f);
+
+    colors[ImGuiCol_Header] = ImVec4(0.30f, 0.15f, 0.45f, 1.00f);
+    colors[ImGuiCol_HeaderHovered] = ImVec4(0.45f, 0.25f, 0.60f, 1.00f);
+    colors[ImGuiCol_HeaderActive] = ImVec4(0.60f, 0.30f, 0.75f, 1.00f);
+
+    colors[ImGuiCol_Separator] = ImVec4(0.45f, 0.45f, 0.55f, 0.60f);
+    colors[ImGuiCol_ResizeGrip] = ImVec4(0.60f, 0.60f, 0.70f, 0.50f);
+    colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.75f, 0.75f, 0.85f, 0.75f);
+    colors[ImGuiCol_ResizeGripActive] = ImVec4(0.90f, 0.90f, 1.00f, 1.00f);
+
+    colors[ImGuiCol_Text] = ImVec4(0.90f, 0.88f, 1.00f, 1.00f);
+    colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.65f, 1.00f);
+    colors[ImGuiCol_PlotLines] = ImVec4(0.85f, 0.85f, 0.95f, 1.00f);
+    colors[ImGuiCol_PlotHistogram] = ImVec4(0.70f, 0.60f, 0.90f, 1.00f);
+
+    style.WindowRounding = 8.0f;
+    style.FrameRounding = 5.0f;
+    style.GrabRounding = 5.0f;
+    style.ScrollbarRounding = 8.0f;
+    style.TabRounding = 4.0f;
+}
+
 int main()
 {
-	glm::mat4 rotationMatrix(1.0f);
+    // Initialise SDL
+    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Window* window = SDL_CreateWindow("WooshEngine",
+        800, 600,
+        SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
-	std::cout << "Hello CMake and vcpkg." << std::endl;
-	return 0;
+    SDL_GLContext gl_context = SDL_GL_CreateContext(window);
+    gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
+
+    // Initialise ImGui
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
+
+    // Change ImGui Style
+    SetImGuiTheme();
+
+    // Setup Platform/Renderer backends
+    ImGui_ImplSDL3_InitForOpenGL(window, gl_context);
+    ImGui_ImplOpenGL3_Init("#version 150");
+
+    // Game Loop
+    bool running = true;
+    while (running)
+    {
+        SDL_Event event;
+        while (SDL_PollEvent(&event))
+        {
+            ImGui_ImplSDL3_ProcessEvent(&event); // Forward your event to backend
+            if (event.type == SDL_EVENT_QUIT)
+                running = false;
+        }
+
+        // Start the Dear ImGui frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplSDL3_NewFrame();
+        ImGui::NewFrame();
+
+        ImGui::Begin("Demo");
+        ImGui::Text("Working Correctly");
+        ImGui::End();
+
+        // Rendering
+        ImGui::Render();
+        glViewport(0, 0, 800, 600);
+        glClear(GL_COLOR_BUFFER_BIT);
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        SDL_GL_SwapWindow(window);
+    }
+
+    // Cleanup
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplSDL3_Shutdown();
+    ImGui::DestroyContext();
+
+    SDL_GL_DestroyContext(gl_context);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
+    return 0;
 }
