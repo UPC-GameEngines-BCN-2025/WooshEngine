@@ -63,7 +63,48 @@ void SetImGuiTheme() {
     style.ScrollbarRounding = 8.0f;
     style.TabRounding = 4.0f;
 }
+void HeaderMenu(bool &running, bool &show_window_test0, bool &show_window_test1, bool &show_window_imGuiDemo, bool &show_window_about) // WIP G.- Would like to store all show_ variables in an array, don't know how yet.
+{
+    if (ImGui::BeginMainMenuBar()){
+        // File 
+        if (ImGui::BeginMenu("File")){
+            if (ImGui::MenuItem("Exit")) { running = false; }
+            ImGui::EndMenu();
+        }
 
+        // View
+        if (ImGui::BeginMenu("View")){
+            if (ImGui::MenuItem("Show Window Test 0", nullptr, show_window_test0)) { show_window_test0 = !show_window_test0; }
+            if (ImGui::MenuItem("Show Window Test 1", nullptr, show_window_test1)) { show_window_test1 = !show_window_test1; }
+            if (ImGui::MenuItem("Show ImGui Demo", nullptr, show_window_imGuiDemo)) { show_window_imGuiDemo = !show_window_imGuiDemo; }
+            ImGui::EndMenu();
+        }
+
+        // Help
+        if (ImGui::BeginMenu("Help")){
+            if (ImGui::MenuItem("Github Documentation")) { OpenLink("https://www.cultofpedagogy.com/wp-content/uploads/2020/03/IDK-Featured.png"); } // WIP G.- We need documentation to update this link.
+            if (ImGui::MenuItem("Report a Bug")) { OpenLink("https://github.com/UPC-GameEngines-BCN-2025/WooshEngine/issues"); }
+            if (ImGui::MenuItem("Download Latest")) { OpenLink("https://github.com/UPC-GameEngines-BCN-2025/WooshEngine/releases"); }
+            if (ImGui::MenuItem("About")) { show_window_about = !show_window_about; }
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMainMenuBar();
+    }
+}
+void OpenLink(const char* url)
+{
+#if defined(_WIN32)
+    std::string command = "start " + std::string(url);
+    std::system(command.c_str());
+#elif defined(__APPLE__)
+    std::string command = "open " + std::string(url);
+    std::system(command.c_str());
+#else // Linux
+    std::string command = "xdg-open " + std::string(url);
+    std::system(command.c_str());
+#endif
+}
 int main()
 {
     // ---- INITIALISE SDL ----
@@ -107,15 +148,32 @@ int main()
         ImGui_ImplSDL3_NewFrame();
         ImGui::NewFrame();
 
-        ImGui::Begin("Test 0");
-        ImGui::Text("Working Correctly");
-        ImGui::ArrowButton("Arrow", ImGuiDir_Down);
-        ImGui::End();
-
-        ImGui::Begin("Test 1");
-        ImGui::Text("Working Correctly");
-        ImGui::Button("Press me", { 80,20 });
-        ImGui::End();
+        // Windows
+        if (show_window_test0){
+            ImGui::Begin("Test 0");
+            ImGui::Text("Working Correctly");
+            ImGui::ArrowButton("Arrow", ImGuiDir_Down);
+            ImGui::End();
+        }
+        if (show_window_test1){
+            ImGui::Begin("Test 1");
+            ImGui::Text("Working Correctly");
+            ImGui::Button("Press me", { 80,20 });
+            ImGui::End();
+        }
+        if (show_window_imGuiDemo){
+            ImGui::ShowDemoWindow();
+        }
+        if (show_window_about)
+        {
+            ImGui::SetNextWindowSize(ImVec2(400, 300));
+            ImGui::Begin("About");
+            ImGui::Text("Text I do not want to write."); // WIP G. - Write text, obviously
+            if (ImGui::Button("Exit", { 80,20 })) { show_window_about = !show_window_about; }
+            ImGui::End();
+        }
+        
+        HeaderMenu(running, show_window_test0, show_window_test1, show_window_imGuiDemo, show_window_about);
 
         // ---- RENDERING ----
         ImGui::Render();
