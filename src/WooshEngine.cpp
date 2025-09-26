@@ -63,6 +63,7 @@ void SetImGuiTheme() {
     style.ScrollbarRounding = 8.0f;
     style.TabRounding = 4.0f;
 }
+
 void HeaderMenu(bool &running, bool &show_window_test0, bool &show_window_test1, bool &show_window_imGuiDemo, bool &show_window_about) // WIP G.- Would like to store all show_ variables in an array, don't know how yet.
 {
     if (ImGui::BeginMainMenuBar()){
@@ -92,8 +93,8 @@ void HeaderMenu(bool &running, bool &show_window_test0, bool &show_window_test1,
         ImGui::EndMainMenuBar();
     }
 }
-void OpenLink(const char* url)
-{
+
+void OpenLink(const char* url) {
 #if defined(_WIN32)
     std::string command = "start " + std::string(url);
     std::system(command.c_str());
@@ -105,6 +106,7 @@ void OpenLink(const char* url)
     std::system(command.c_str());
 #endif
 }
+
 int main()
 {
     // ---- INITIALISE SDL ----
@@ -147,6 +149,7 @@ int main()
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL3_NewFrame();
         ImGui::NewFrame();
+        ImGui::DockSpaceOverViewport();
 
         // Windows
         if (show_window_test0){
