@@ -110,14 +110,32 @@ void OpenLink(const char* url) {
 
 int main()
 {
+    // Window Res
+    const int SCREEN_WIDTH = 1920/2;
+    const int SCREEN_HEIGHT = 1080/2;
+
     // ---- INITIALISE SDL ----
-    SDL_Init(SDL_INIT_VIDEO);
+    if (!SDL_Init(SDL_INIT_VIDEO)) {
+        return -1;
+    }
+
+    // Setup Major.Minor version for OpenGL 4.6
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+
     SDL_Window* window = SDL_CreateWindow("WooshEngine",
-        800, 600,
+        SCREEN_WIDTH, SCREEN_HEIGHT,
         SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
+    // ---- INITIALISE OpenGL ----
     SDL_GLContext gl_context = SDL_GL_CreateContext(window);
-    gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
+    if (!gl_context) {
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return -1;
+    }
+    gladLoadGL(); // Load OpenGL functions
+    glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT); // Set Renderizable Area
 
     // ---- INITIALISE ImGui ----
     // Setup Dear ImGui context
@@ -182,10 +200,11 @@ int main()
 
         // ---- RENDERING ----
         ImGui::Render();
-        glViewport(0, 0, 800, 600);
-        glClear(GL_COLOR_BUFFER_BIT); // Clear OpenGl Color and Depth buffers
+        glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        glClearColor(0.18f, 0.26f, 0.47f, 1.0f); // Doesn't show right now because the Docking Space is over the viewport
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Color and Depth buffers
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        SDL_GL_SwapWindow(window); // Swapping the images in Frontbuffer and backbuffer
+        SDL_GL_SwapWindow(window); // Swapping window (the images in Frontbuffer and backbuffer)
     }
 
     // ---- CLEANUP ----
