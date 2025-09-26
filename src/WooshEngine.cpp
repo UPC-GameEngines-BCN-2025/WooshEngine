@@ -66,6 +66,7 @@ void SetImGuiTheme() {
 
 void HeaderMenu(bool &running, bool &show_window_test0, bool &show_window_test1, bool &show_window_imGuiDemo, bool &show_window_about) // WIP G.- Would like to store all show_ variables in an array, don't know how yet.
 {
+    // ---- MAIN MENU BAR (TOP LEFT) ----
     if (ImGui::BeginMainMenuBar()){
         // File 
         if (ImGui::BeginMenu("File")){
@@ -95,13 +96,13 @@ void HeaderMenu(bool &running, bool &show_window_test0, bool &show_window_test1,
 }
 
 void OpenLink(const char* url) {
-#if defined(_WIN32)
+#if defined(_WIN32) // For Windows
     std::string command = "start " + std::string(url);
     std::system(command.c_str());
-#elif defined(__APPLE__)
+#elif defined(__APPLE__) // For Mac
     std::string command = "open " + std::string(url);
     std::system(command.c_str());
-#else // Linux
+#else // For Linux
     std::string command = "xdg-open " + std::string(url);
     std::system(command.c_str());
 #endif
@@ -126,6 +127,7 @@ int main()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
+    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;     // Uncomment in case we want to have windows outside the main window, creating other viewports
 
     // Change ImGui Style
     SetImGuiTheme();
@@ -181,9 +183,9 @@ int main()
         // ---- RENDERING ----
         ImGui::Render();
         glViewport(0, 0, 800, 600);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT); // Clear OpenGl Color and Depth buffers
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        SDL_GL_SwapWindow(window);
+        SDL_GL_SwapWindow(window); // Swapping the images in Frontbuffer and backbuffer
     }
 
     // ---- CLEANUP ----
